@@ -23,6 +23,9 @@ html {
   fill: red;
 }
 
+.player {
+  fill: white;
+}
+
 .update {
-  fill: blue;
 }

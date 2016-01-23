@@ -5,6 +5,9 @@ var enemyPos2 = [[50, 200], [250, 100], [400, 150], [400, 430], [100, 275],  [10
 var container = d3.select("body").append("svg").attr("height", "600px").attr("width", "600px")
                 .attr("class", "container");
 
+var player = container.append("circle").attr("cx" , "300").attr("cy", "300").attr("r", "20")
+              .attr("class", "player");
+
 var update = function(data){
   console.log('running update');
   // data join
@@ -18,8 +21,7 @@ var update = function(data){
     .attr("cy", function(d) {
       return d[1];
     })
-    .attr("r", "20")
-    .attr("class", "update");
+    .attr("r", "20");
 
   // enter
   enemies.enter().append("circle")
@@ -36,9 +38,10 @@ var update = function(data){
 };
 
 //data randomizer helper
-var randCoords = function(){
-  var coordPoints = [];
-  for(var i = 0; i < 5; i++){
+var randCoords = function(playerPos){
+
+  var coordPoints = [playerPos];
+  for(var i = 0; i < 6; i++){
     var xAxis = Math.random() * 600;
     var yAxis = Math.random() * 600;
     coordPoints.push([xAxis, yAxis]);
@@ -50,9 +53,9 @@ var randCoords = function(){
 // console.log(randCoords());
 
 // initial setup
-update(randCoords());
+update(randCoords([300,300]));
 
-// movement loop
+// // movement loop
 setInterval(function() {
-  update(randCoords());
+  update(randCoords([300,300]));
 }, 700);
