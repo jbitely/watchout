@@ -9,19 +9,13 @@ var container = d3.select("body").append("svg").attr("height", "600px").attr("wi
 var update = function(data){
   // data join
   var enemies = container.selectAll("circle").data(data);
-  console.log(enemies);
-  // // add new enemies
-  // enemies.enter().container.append("circle")
-  //   .attr("cx", function(){
-
-  //   })
-  //   .attr("cy", function(){
-
-  //   })
-  //   .attr("r", "20")
-  //   .attr("class", "enemy");
-  // // position callbacks
-  // var
+  // console.log(enemies);
+  // add new enemies
+  enemies.enter().append("circle")
+    .attr("cx", "40")
+    .attr("cy", "100")
+    .attr("r", "20")
+    .attr("class", "enemy");
 
 };
 
