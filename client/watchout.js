@@ -23,7 +23,8 @@ var player = container.append("circle").attr("cx" , "300").attr("cy", "300").att
 
 
 var collideCheck = function(){
-  return function() {
+  console.log('collideCheck ran');
+  enemies.each(function() {
     var enemyX = Math.floor(d3.select(this).attr('cx'));
     var enemyY = Math.floor(d3.select(this).attr('cy'));
     var enemyR = Number(d3.select(this).attr('r'));
@@ -39,10 +40,10 @@ var collideCheck = function(){
       console.log("collision!");
       // d3.selectAll(".enemy").transition();
       //reset game;
-
-      // initialize(totalCollisions++);
+      currentScore = 0;
+      totalCollisions++;
     }
-  }
+  });
 }
 var enemies = container.selectAll(".enemy")
   .data(d3.range(5))
@@ -65,7 +66,7 @@ var moveEnemies = function(){  //change function name
   // update & transition
   enemies.transition().duration(2000)
     // collision detection
-    .tween("collideCheck", collideCheck)
+    // .tween("collideCheck", collideCheck)
     .attr("cx", function(d) {
       return Math.random() * 600;
     })
@@ -96,32 +97,43 @@ var moveEnemies = function(){  //change function name
 // };
 
 // initial setup
-function initialize(collisionCount) {
-console.log('initialize called');
-  console.log(totalCollisions);
-  document.getElementById("collisions").innerHTML = collisionCount;
-  if(currentScore > higherScore) {
-    higherScore = currentScore;
-    document.getElementById("high").innerHTML = higherScore;
-  }
-  // reset current score
-  currentScore = 0;
-  // clearInterval(enemyMove);
-  moveEnemies([]);
-  // reset player position
-  // start enemy movement again
-  // update([1,2,3,4,5]);
-  // gameTimer = setInterval(function() {
-  //   moveEnemies([1,2,3,4,5]);
-  // }, 3000);
-}
+// function initialize(collisionCount) {
+// console.log('initialize called');
+//   console.log(totalCollisions);
 
-initialize(0);
+
+//   // reset current score
+
+//   // clearInterval(enemyMove);
+//   moveEnemies([]);
+//   // reset player position
+//   // start enemy movement again
+//   // update([1,2,3,4,5]);
+//   // gameTimer = setInterval(function() {
+//   //   moveEnemies([1,2,3,4,5]);
+//   // }, 3000);
+// }
+
+// initialize(0);
 //clear current board and call update
 
 // movement loop
-
+moveEnemies()
 
 //current score
 // currentScore++;
 //   document.getElementById("current").innerHTML = currentScore;
+var scoreUpdate = function() {
+  d3.select('.scoreboard .current span').text(currentScore);
+  d3.select('.scoreboard .high span').text(higherScore);
+  d3.select('.scoreboard .collisions span').text(totalCollisions);
+};
+
+var scoreTicker = function() {
+  currentScore++;
+  higherScore = Math.max(higherScore, currentScore);
+  scoreUpdate();
+};
+
+setInterval(scoreTicker, 100);
+d3.timer(collideCheck);
