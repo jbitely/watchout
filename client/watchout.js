@@ -52,6 +52,7 @@ var randCoords = function(){
 // initial setup
 update(randCoords());
 
-update(randCoords());
-
 // movement loop
+setInterval(function() {
+  update(randCoords());
+}, 700);
