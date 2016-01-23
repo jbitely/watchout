@@ -5,8 +5,6 @@ var enemyPos2 = [[50, 200], [250, 100], [400, 150], [400, 430], [100, 275],  [10
 var container = d3.select("body").append("svg").attr("height", "600px").attr("width", "600px")
                 .attr("class", "container");
 
-
-
 var update = function(data){
   console.log('running update');
   // data join
@@ -37,9 +35,23 @@ var update = function(data){
   // exit
 };
 
-// initial setup
-update(enemyPos1);
-
-update(enemyPos2);
-
 //data randomizer helper
+var randCoords = function(){
+  var coordPoints = [];
+  for(var i = 0; i < 5; i++){
+    var xAxis = Math.random() * 600;
+    var yAxis = Math.random() * 600;
+    coordPoints.push([xAxis, yAxis]);
+  }
+  return coordPoints;
+};
+
+// console.log(randCoords());
+// console.log(randCoords());
+
+// initial setup
+update(randCoords());
+
+update(randCoords());
+
+// movement loop
