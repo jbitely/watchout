@@ -5,8 +5,19 @@ var enemyPos2 = [[50, 200], [250, 100], [400, 150], [400, 430], [100, 275],  [10
 var container = d3.select("body").append("svg").attr("height", "600px").attr("width", "600px")
                 .attr("class", "container");
 
+var drag = d3.behavior.drag()
+  .on('dragstart', function() {  })
+  .on('drag', function() { player.attr('cx', d3.event.x).attr('cy', d3.event.y);})
+  .on('dragend', function() {});
+
+
+
 var player = container.append("circle").attr("cx" , "300").attr("cy", "300").attr("r", "20")
-              .attr("class", "player");
+              .attr("class", "player").call(drag);
+
+  //drag function
+
+
 
 var update = function(data){
   console.log('running update');
@@ -16,9 +27,11 @@ var update = function(data){
   // update & transition
   enemies.transition().duration(1000)
     .attr("cx", function(d) {
+      console.log(d[0])
       return d[0];
     })
     .attr("cy", function(d) {
+      console.log(d[1])
       return d[1];
     })
     .attr("r", "20");
@@ -33,7 +46,6 @@ var update = function(data){
     })
     .attr("r", "20")
     .attr("class", "enemy");
-
   // exit
 };
 
@@ -49,13 +61,12 @@ var randCoords = function(playerPos){
   return coordPoints;
 };
 
-// console.log(randCoords());
-// console.log(randCoords());
+
 
 // initial setup
 update(randCoords([300,300]));
 
-// // movement loop
+// movement loop
 setInterval(function() {
   update(randCoords([300,300]));
 }, 700);
