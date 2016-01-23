@@ -18,3 +18,7 @@ html {
 .container {
   background-color: grey;
 }
+
+.enemy {
+  fill: red;
+}
