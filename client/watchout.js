@@ -21,9 +21,12 @@ var drag = d3.behavior.drag()
 var player = container.append("circle").attr("cx" , "300").attr("cy", "300").attr("r", "20")
               .attr("class", "player").call(drag);
 
-
+var prevCollision = false;
 var collideCheck = function(){
   console.log('collideCheck ran');
+  var collided = false;
+  // var prevCollision = false;
+
   enemies.each(function() {
     var enemyX = Math.floor(d3.select(this).attr('cx'));
     var enemyY = Math.floor(d3.select(this).attr('cy'));
@@ -37,13 +40,19 @@ var collideCheck = function(){
     var radii = Math.pow((enemyR + playerR), 2);
     // if distance <= radius distance, they are colliding
     if(distance <= radii){
+      collided = true;
       console.log("collision!");
-      // d3.selectAll(".enemy").transition();
+            // d3.selectAll(".enemy").transition();
       //reset game;
-      currentScore = 0;
-      totalCollisions++;
     }
   });
+  if(collided){
+    currentScore = 0;
+    if(prevCollision != collided){
+      totalCollisions++;
+    }
+  }
+  prevCollision = collided;
 }
 var enemies = container.selectAll(".enemy")
   .data(d3.range(5))
