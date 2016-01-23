@@ -25,9 +25,18 @@ var collideCheck = function(){
   return function() {
     var enemyX = Math.floor(d3.select(this).attr('cx'));
     var enemyY = Math.floor(d3.select(this).attr('cy'));
+    var enemyR = Number(d3.select(this).attr('r'));
     var playerX = Math.floor(player.attr('cx'));
     var playerY = Math.floor(player.attr('cy'));
-    console.log("enemy: " + enemyX + "," + enemyY);
+    var playerR = Number(player.attr('r'));
+    // get distance between centers
+    var distance = Math.pow(enemyX - playerX, 2) + Math.pow(enemyY - playerY, 2);
+    // get radius distance
+    var radii = Math.pow((enemyR + playerR), 2);
+    // if distance <= radius distance, they are colliding
+    if(distance <= radii){
+      console.log("collision!");
+    }
   }
 }
 
@@ -84,4 +93,4 @@ update([1]);
 // movement loop
 setInterval(function() {
   update([1]);
-}, 1500);
+}, 3000);
