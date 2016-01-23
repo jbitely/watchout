@@ -10,8 +10,9 @@ html {
 }
 
 .scoreboard {
+  color: white;
   background-color: blue;
-  width: 200;
+  width: 150px;
   float: right;
 }
 

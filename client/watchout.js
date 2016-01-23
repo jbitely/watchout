@@ -2,9 +2,7 @@
 var higherScore = 0;
 var currentScore = 0;
 var totalCollisions = 0;
-var gameTimer = setInterval(function() {
-    update([1,2,3,4,5]);
-  }, 3000);
+
 var container = d3.select("body").append("svg").attr("height", "600px").attr("width", "600px")
                 .attr("class", "container");
 
@@ -39,37 +37,15 @@ var collideCheck = function(){
     // if distance <= radius distance, they are colliding
     if(distance <= radii){
       console.log("collision!");
-      d3.selectAll(".enemy").transition();
+      // d3.selectAll(".enemy").transition();
       //reset game;
-      clearInterval(gameTimer);
-      initialize(totalCollisions++);
+
+      // initialize(totalCollisions++);
     }
   }
 }
-
-
-
-var update = function(data){  //change function name
-  // data join
-  currentScore++;
-  document.getElementById("current").innerHTML = currentScore;
-  var enemies = container.selectAll(".enemy").data(data);
-
-  // update & transition
-  enemies.transition().duration(2000)
-    // collision detection
-      // player.cx, player.cy
-      //this.cx, this.cy
-    .tween("collideCheck", collideCheck)
-    .attr("cx", function(d) {
-      return Math.random() * 600;
-    })
-    .attr("cy", function(d) {
-      return Math.random() * 600;
-    })
-    .attr("r", "20");
-
-  // enter
+var enemies = container.selectAll(".enemy")
+  .data(d3.range(5))
   enemies.enter().append("circle")
     .attr("cx", function(d) {
       return Math.random() * 600;
@@ -79,8 +55,32 @@ var update = function(data){  //change function name
     })
     .attr("r", "20")
     .attr("class", "enemy");
+
+
+var moveEnemies = function(){  //change function name
+  // data join
+
+
+
+  // update & transition
+  enemies.transition().duration(2000)
+    // collision detection
+    .tween("collideCheck", collideCheck)
+    .attr("cx", function(d) {
+      return Math.random() * 600;
+    })
+    .attr("cy", function(d) {
+      return Math.random() * 600;
+    })
+    .attr("r", "20")
+    .each('end', function() {
+      moveEnemies(d3.select(this));
+    });
+
+  // enter
+
   // exit
-    enemies.exit().remove();
+    // enemies.exit().remove();
 };
 
 //data randomizer helper
@@ -107,13 +107,13 @@ console.log('initialize called');
   // reset current score
   currentScore = 0;
   // clearInterval(enemyMove);
-  update([]);
+  moveEnemies([]);
   // reset player position
   // start enemy movement again
   // update([1,2,3,4,5]);
-  gameTimer = setInterval(function() {
-    update([1,2,3,4,5]);
-  }, 3000);
+  // gameTimer = setInterval(function() {
+  //   moveEnemies([1,2,3,4,5]);
+  // }, 3000);
 }
 
 initialize(0);
@@ -121,3 +121,7 @@ initialize(0);
 
 // movement loop
 
+
+//current score
+// currentScore++;
+//   document.getElementById("current").innerHTML = currentScore;
