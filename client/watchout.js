@@ -7,31 +7,39 @@ var container = d3.select("body").append("svg").attr("height", "600px").attr("wi
 
 //drag function
 var drag = d3.behavior.drag()
-  .on('dragstart', function() {  })
-  .on('drag', function() { player.attr('cx', d3.event.x).attr('cy', d3.event.y);})
+  .on('dragstart', function() {})
+  .on('drag', function() {
+    //d3.event.x // d3.event.y
+    player.attr('cx', d3.event.x)
+
+    .attr('cy', d3.event.y);
+  })
   .on('dragend', function() {});
 
 
-var player = container.append("circle").attr("cx" , "300").attr("cy", "300").attr("r", "20")
-              .attr("class", "player").call(drag);
+// var player = container.append("circle").attr("cx" , "300").attr("cy", "300").attr("r", "20")
+//               .attr("class", "player").call(drag);
 
 
 
 
 
-var update = function(data){
+var update = function(data){  //change function name
   console.log('running update');
   // data join
   var enemies = container.selectAll(".enemy").data(data);
 
   // update & transition
   enemies.transition().duration(1000)
+    // collision detection
+      // player.cx, player.cy
+      //this.cx, this.cy
     .attr("cx", function(d) {
-      console.log(d[0])
+      // console.log(player.cx, player.cy);
+      console.log(this.cx, this.cy);
       return Math.random() * 600;
     })
     .attr("cy", function(d) {
-      console.log(d[1])
       return Math.random() * 600;
     })
     .attr("r", "20");
@@ -64,9 +72,11 @@ var update = function(data){
 
 
 // initial setup
-update([1,2,3,4,5]);
+update([1]);
+update([1]);
+update([1]);
 
 //movement loop
-setInterval(function() {
-  update([1,2,3,4,5]);
-}, 700);
+// setInterval(function() {
+//   update([1]);
+// }, 700);
