@@ -51,6 +51,8 @@ var collideCheck = function(){
 
 var update = function(data){  //change function name
   // data join
+  currentScore++;
+  document.getElementById("current").innerHTML = currentScore;
   var enemies = container.selectAll(".enemy").data(data);
 
   // update & transition
@@ -95,11 +97,12 @@ var update = function(data){  //change function name
 
 // initial setup
 function initialize(collisionCount) {
-  console.log('initialize called');
+console.log('initialize called');
   console.log(totalCollisions);
-
+  document.getElementById("collisions").innerHTML = collisionCount;
   if(currentScore > higherScore) {
     higherScore = currentScore;
+    document.getElementById("high").innerHTML = higherScore;
   }
   // reset current score
   currentScore = 0;
@@ -113,7 +116,7 @@ function initialize(collisionCount) {
   }, 3000);
 }
 
-initialize();
+initialize(0);
 //clear current board and call update
 
 // movement loop
