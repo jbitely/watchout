@@ -22,3 +22,7 @@ html {
 .enemy {
   fill: red;
 }
+
+.update {
+  fill: blue;
+}
