@@ -2,7 +2,9 @@
 var higherScore = 0;
 var currentScore = 0;
 var totalCollisions = 0;
-
+var gameTimer = setInterval(function() {
+    update([1,2,3,4,5]);
+  }, 3000);
 var container = d3.select("body").append("svg").attr("height", "600px").attr("width", "600px")
                 .attr("class", "container");
 
@@ -37,13 +39,10 @@ var collideCheck = function(){
     // if distance <= radius distance, they are colliding
     if(distance <= radii){
       console.log("collision!");
-      // check for new high score
-
-      console.log(totalCollisions);
-      // increment collsions
-      totalCollisions++;
+      d3.selectAll(".enemy").transition();
       //reset game;
-      initialize();
+      clearInterval(gameTimer);
+      initialize(totalCollisions++);
     }
   }
 }
@@ -79,6 +78,7 @@ var update = function(data){  //change function name
     .attr("r", "20")
     .attr("class", "enemy");
   // exit
+    enemies.exit().remove();
 };
 
 //data randomizer helper
@@ -94,19 +94,27 @@ var update = function(data){  //change function name
 // };
 
 // initial setup
-function initialize() {
+function initialize(collisionCount) {
+  console.log('initialize called');
+  console.log(totalCollisions);
+
   if(currentScore > higherScore) {
     higherScore = currentScore;
   }
-      // reset current score
+  // reset current score
   currentScore = 0;
-  clearInterval(enemyMove);
-  // update([1]);
+  // clearInterval(enemyMove);
+  update([]);
+  // reset player position
+  // start enemy movement again
+  // update([1,2,3,4,5]);
+  gameTimer = setInterval(function() {
+    update([1,2,3,4,5]);
+  }, 3000);
 }
-initialize([1]);
+
+initialize();
 //clear current board and call update
 
 // movement loop
-var enemyMove = setInterval(function() {
-  update([1]);
-}, 3000);
+
