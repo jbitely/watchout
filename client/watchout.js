@@ -1,6 +1,7 @@
 // start slingin' some d3 here.
-var enemyPos1 = [[200, 50], [100, 250], [150, 400], [430, 400], [275, 100]];
-var enemyPos2 = [[50, 200], [250, 100], [400, 150], [400, 430], [100, 275],  [100, 100], [325, 50]];
+var higherScore = 0;
+var currentScore = 0;
+var totalCollisions = 0;
 
 var container = d3.select("body").append("svg").attr("height", "600px").attr("width", "600px")
                 .attr("class", "container");
@@ -36,6 +37,13 @@ var collideCheck = function(){
     // if distance <= radius distance, they are colliding
     if(distance <= radii){
       console.log("collision!");
+      // check for new high score
+
+      console.log(totalCollisions);
+      // increment collsions
+      totalCollisions++;
+      //reset game;
+      initialize();
     }
   }
 }
@@ -85,12 +93,20 @@ var update = function(data){  //change function name
 //   return coordPoints;
 // };
 
-
-
 // initial setup
-update([1]);
+function initialize() {
+  if(currentScore > higherScore) {
+    higherScore = currentScore;
+  }
+      // reset current score
+  currentScore = 0;
+  clearInterval(enemyMove);
+  // update([1]);
+}
+initialize([1]);
+//clear current board and call update
 
 // movement loop
-setInterval(function() {
+var enemyMove = setInterval(function() {
   update([1]);
 }, 3000);
