@@ -74,7 +74,7 @@ var collideCheck = function(){
 }
 
 var moveEnemies = function(){
-  enemies.transition().duration(1000)
+  enemies.transition().duration(1250)
     .attr("cx", function(d) {
       return Math.random() * 600;
     })
